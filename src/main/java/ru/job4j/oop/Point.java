@@ -4,14 +4,13 @@ import static java.lang.Math.sqrt;
 import static java.lang.Math.pow;
 
 public class Point {
-    private final int x;
-    private final int y;
-    private final int z;
+    private int x;
+    private int y;
+    private int z;
 
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
-        z = 0;
     }
 
     public Point(int x, int y, int z) {
