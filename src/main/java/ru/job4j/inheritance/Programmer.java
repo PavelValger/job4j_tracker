@@ -5,4 +5,7 @@ public class Programmer extends Engineer {
                       String birthday, String specialization) {
         super(name, surname, education, birthday, specialization);
     }
+
+    public void java() {
+    }
 }

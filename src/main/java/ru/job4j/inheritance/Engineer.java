@@ -9,7 +9,7 @@ public class Engineer extends Profession {
         this.specialization = specialization;
     }
 
-    public String getSpecialization() {
-        return this.specialization;
+    public int calculator(int number) {
+        return 1;
     }
 }

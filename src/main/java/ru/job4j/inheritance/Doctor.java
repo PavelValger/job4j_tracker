@@ -9,7 +9,7 @@ public class Doctor extends Profession {
         this.profile = profile;
     }
 
-    public String getProfile() {
-        return this.profile;
+    public String history(String diseases) {
+        return null;
     }
 }

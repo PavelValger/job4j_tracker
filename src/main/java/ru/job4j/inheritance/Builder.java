@@ -5,4 +5,7 @@ public class Builder extends Engineer {
                    String birthday, String specialization) {
         super(name, surname, education, birthday, specialization);
     }
+
+    public void illustration() {
+    }
 }
