@@ -23,7 +23,7 @@ public class Library {
         }
         System.out.println("Book search");
         for (Book sh : shelf) {
-            if (sh.getName().equals("Clean code")) {
+            if ("Clean code".equals(sh.getName())) {
                 System.out.println(sh.getName() + " - " + sh.getPages());
             }
         }
