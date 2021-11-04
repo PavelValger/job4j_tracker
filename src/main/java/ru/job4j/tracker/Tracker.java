@@ -31,15 +31,8 @@ public class Tracker {
     }
 
     public Item findById(int id) {
-        Item rsl = null;
-        for (int index = 0; index < size; index++) {
-            Item receive = items[index];
-            if (receive.getId() == id) {
-                rsl = receive;
-                break;
-            }
-        }
-        return rsl;
+        int index = indexOf(id);
+        return index != -1 ? items[index] : null;
     }
 
     private int indexOf(int id) {
