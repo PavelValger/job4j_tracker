@@ -12,7 +12,7 @@ public class Calculator {
     }
 
     public static int minus(int z) {
-        return Math.abs(z - x);
+        return z - x;
     }
 
     public int divide(int n) {
