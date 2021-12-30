@@ -18,4 +18,22 @@ public class OrderConvertTest {
         HashMap<String, Order> map = OrderConvert.process(orders);
         assertThat(map.get("3sfe"), is(new Order("3sfe", "Dress")));
     }
+
+    @Test
+    public void duplicate() {
+        List<Order> orders = new ArrayList<>();
+        orders.add(new Order("3qwerty", "Clone"));
+        orders.add(new Order("3qwerty", "Clo"));
+        HashMap<String, Order> map = OrderConvert.process(orders);
+        assertThat(map.get("3qwerty"), is(new Order("3qwerty", "Clone")));
+    }
+
+    @Test
+    public void duplicateFalse() {
+        List<Order> orders = new ArrayList<>();
+        orders.add(new Order("3qwerty", "Clone"));
+        orders.add(new Order("3qwerty", "Clo"));
+        HashMap<String, Order> map = OrderConvert.process(orders);
+        assertFalse(map.containsValue(new Order("3qwerty", "Clo")));
+    }
 }
