@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ItemAscByNameTest {
 
     @Test
-    public void compare() {
+    public void directComparison() {
         List<Item> items = Arrays.asList(
                 new Item("Qwerty"),
                 new Item("Denis"),

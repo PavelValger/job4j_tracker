@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class ItemDescByNameTest {
 
     @Test
-    public void compare() {
+    public void reverseComparison() {
         List<Item> items = Arrays.asList(
                 new Item("Amadey"),
                 new Item("Qwerty"),
