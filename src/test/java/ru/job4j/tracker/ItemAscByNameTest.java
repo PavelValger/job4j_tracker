@@ -12,16 +12,12 @@ public class ItemAscByNameTest {
 
     @Test
     public void directComparison() {
-        List<Item> items = Arrays.asList(
-                new Item("Qwerty"),
-                new Item("Denis"),
-                new Item("Amadey"),
-                new Item("Felix"));
-        List<Item> expected = Arrays.asList(
-                new Item("Amadey"),
-                new Item("Denis"),
-                new Item("Felix"),
-                new Item("Qwerty"));
+        Item first = new Item("Amadey");
+        Item second = new Item("Denis");
+        Item third = new Item("Felix");
+        Item fourth = new Item("Qwerty");
+        List<Item> items = Arrays.asList(fourth, second, third, first);
+        List<Item> expected = List.of(first, second, third, fourth);
         items.sort(new ItemAscByName());
         assertThat(items, is(expected));
     }

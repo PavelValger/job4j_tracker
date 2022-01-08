@@ -12,16 +12,12 @@ public class ItemDescByNameTest {
 
     @Test
     public void reverseComparison() {
-        List<Item> items = Arrays.asList(
-                new Item("Amadey"),
-                new Item("Qwerty"),
-                new Item("Felix"),
-                new Item("Denis"));
-        List<Item> expected = Arrays.asList(
-                new Item("Qwerty"),
-                new Item("Felix"),
-                new Item("Denis"),
-                new Item("Amadey"));
+        Item first = new Item("Amadey");
+        Item second = new Item("Denis");
+        Item third = new Item("Felix");
+        Item fourth = new Item("Qwerty");
+        List<Item> items = Arrays.asList(first, fourth, third, second);
+        List<Item> expected = List.of(fourth, third, second, first);
         items.sort(new ItemDescByName());
         assertThat(items, is(expected));
     }
