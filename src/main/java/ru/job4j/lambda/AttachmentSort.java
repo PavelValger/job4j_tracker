@@ -21,7 +21,7 @@ public class AttachmentSort {
         };
         attachments.sort(comparator);
         System.out.println(attachments);
-        Comparator<Attachment> name = new Comparator<Attachment>() {
+        Comparator<Attachment> name = new Comparator<>() {
             @Override
             public int compare(Attachment first, Attachment second) {
                 return first.getName().compareTo(second.getName());
