@@ -40,7 +40,7 @@ public class Card {
     public static void main(String[] args) {
         Stream.of(Suit.values())
                 .flatMap(symbol -> Stream.of(Value.values())
-                .map(card -> symbol + " " + card))
+                .map(meaning -> new Card(symbol, meaning)))
                 .forEach(System.out::println);
     }
 }
