@@ -3,9 +3,8 @@ package ru.job4j.stream;
 import java.util.Objects;
 
 public class Student {
-    private final int score;
-
-    private final String surname;
+    private int score;
+    private String surname;
 
     public Student(int score, String surname) {
         this.score = score;
@@ -18,6 +17,14 @@ public class Student {
 
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override
