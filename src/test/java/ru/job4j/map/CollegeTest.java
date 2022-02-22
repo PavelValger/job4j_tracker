@@ -13,7 +13,7 @@ public class CollegeTest {
 
     @Test
     public void whenAccountIsOptionalEmpty() {
-        Map<Student, Set<Subject>> students = Map.of(
+        var students = Map.of(
                 new Student("Student1", "000001", "201-18-15"),
                 Set.of(
                         new Subject("Math", 70),
@@ -25,13 +25,13 @@ public class CollegeTest {
                         new Subject("Sociology", 65)
                 )
         );
-        College college = new College(students);
+        var college = new College(students);
         assertThat(college.findByAccount("000010"), is(Optional.empty()));
     }
 
     @Test
     public void whenAccountIsOptionalNotEmpty() {
-        Map<Student, Set<Subject>> students = Map.of(
+        var students = Map.of(
                 new Student("Student1", "000001", "201-18-15"),
                 Set.of(
                         new Subject("Math", 70),
@@ -43,13 +43,13 @@ public class CollegeTest {
                         new Subject("Sociology", 65)
                 )
         );
-        College college = new College(students);
+        var college = new College(students);
         assertThat(college.findByAccount("000001").get().getGroup(), is("201-18-15"));
     }
 
     @Test
     public void whenSubjectIsOptionalEmptyWithNotFoundAccount() {
-        Map<Student, Set<Subject>> students = Map.of(
+        var students = Map.of(
                 new Student("Student1", "000001", "201-18-15"),
                 Set.of(
                         new Subject("Math", 70),
@@ -61,13 +61,13 @@ public class CollegeTest {
                         new Subject("Sociology", 65)
                 )
         );
-        College college = new College(students);
+        var college = new College(students);
         assertThat(college.findBySubjectName("000010", "Sociology"), is(Optional.empty()));
     }
 
     @Test
     public void whenSubjectIsOptionalEmptyWithFoundAccount() {
-        Map<Student, Set<Subject>> students = Map.of(
+        var students = Map.of(
                 new Student("Student1", "000001", "201-18-15"),
                 Set.of(
                         new Subject("Math", 70),
@@ -79,13 +79,13 @@ public class CollegeTest {
                         new Subject("Sociology", 65)
                 )
         );
-        College college = new College(students);
+        var college = new College(students);
         assertThat(college.findBySubjectName("000001", "Sociology"), is(Optional.empty()));
     }
 
     @Test
     public void whenSubjectIsOptionalNotEmpty() {
-        Map<Student, Set<Subject>> students = Map.of(
+        var students = Map.of(
                 new Student("Student1", "000001", "201-18-15"),
                 Set.of(
                         new Subject("Math", 70),
@@ -97,7 +97,7 @@ public class CollegeTest {
                         new Subject("Sociology", 65)
                 )
         );
-        College college = new College(students);
+        var college = new College(students);
         assertThat(college.findBySubjectName("000002", "Sociology").get().getScore(), is(65));
     }
 }
