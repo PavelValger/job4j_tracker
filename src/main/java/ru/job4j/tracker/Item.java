@@ -55,6 +55,10 @@ public class Item {
         this.name = name;
     }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
