@@ -49,7 +49,6 @@ public class SqlTracker implements Store, AutoCloseable {
 
     @Override
     public Item add(Item item) {
-        int id = 0;
         try (PreparedStatement statement =
                      connection.prepareStatement(
                              "insert into items(name, created) values (?, ?)",
@@ -59,17 +58,7 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.execute();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    id = generatedKeys.getInt(1);
-                    item.setId(id);
-                }
-            }
-            try (PreparedStatement setCreated = connection.prepareStatement(
-                    "select * from items where id = ?")) {
-                setCreated.setInt(1, id);
-                try (ResultSet resultSet = setCreated.executeQuery()) {
-                    if (resultSet.next()) {
-                        item.setCreated(resultSet.getTimestamp(3).toLocalDateTime());
-                    }
+                    item.setId(generatedKeys.getInt(1));
                 }
             }
         } catch (SQLException e) {
