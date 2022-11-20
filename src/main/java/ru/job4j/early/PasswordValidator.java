@@ -1,23 +1,10 @@
 package ru.job4j.early;
 
 import java.util.Locale;
-import java.util.function.Predicate;
 
 public class PasswordValidator {
-    private static char[] array;
-
-    private static void isValidate(Predicate<Character> predicate, String exception) {
-        boolean valid = false;
-        for (char symbol : array) {
-            if (predicate.test(symbol)) {
-                valid = true;
-                break;
-            }
-        }
-        if (!valid) {
-            throw new IllegalArgumentException(exception);
-        }
-    }
+    private static final String[] INVALID_STRINGS = {
+            "qwerty", "12345", "password", "admin", "user"};
 
     public static String validate(String password) {
         if (password == null) {
@@ -27,22 +14,51 @@ public class PasswordValidator {
         if (length < 8 || length > 32) {
             throw new IllegalArgumentException("Password should be length [8, 32]");
         }
-        array = password.toCharArray();
-        Predicate<Character> isUpperCase = Character::isUpperCase;
-        isValidate(isUpperCase, "Password should contain at least one uppercase letter");
-        Predicate<Character> isLowerCase = Character::isLowerCase;
-        isValidate(isLowerCase, "Password should contain at least one lowercase letter");
-        Predicate<Character> isDigit = Character::isDigit;
-        isValidate(isDigit, "Password should contain at least one figure");
-        Predicate<Character> isSpecial = symbol -> !Character.isLetter(symbol)
-                && !Character.isDigit(symbol);
-        isValidate(isSpecial, "Password should contain at least one special symbol");
-        String register = password.toLowerCase(Locale.ROOT);
-        if (password.contains("12345") || register.contains("qwerty")
-                || register.contains("password") || register.contains("admin")
-                || register.contains("user")) {
+        boolean upper = false;
+        boolean lower = false;
+        boolean digit = false;
+        boolean special = false;
+        char[] array = password.toCharArray();
+        for (char symbol : array) {
+            if (Character.isUpperCase(symbol)) {
+                upper = true;
+            }
+            if (Character.isLowerCase(symbol)) {
+                lower = true;
+            }
+            if (Character.isDigit(symbol)) {
+                digit = true;
+            }
+            if (!Character.isLetter(symbol) && !Character.isDigit(symbol)) {
+                special = true;
+            }
+            if (upper && lower && digit && special) {
+                break;
+            }
+        }
+        if (!upper) {
             throw new IllegalArgumentException(
-                    "Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
+                    "Password should contain at least one uppercase letter");
+        }
+        if (!lower) {
+            throw new IllegalArgumentException(
+                    "Password should contain at least one lowercase letter");
+        }
+        if (!digit) {
+            throw new IllegalArgumentException(
+                    "Password should contain at least one figure");
+        }
+        if (!special) {
+            throw new IllegalArgumentException(
+                    "Password should contain at least one special symbol");
+        }
+        String register = password.toLowerCase(Locale.ROOT);
+        for (String string : INVALID_STRINGS) {
+            if (register.contains(string)) {
+                throw new IllegalArgumentException(
+                        "Password shouldn't contain substrings:"
+                               + " qwerty, 12345, password, admin, user");
+            }
         }
         return password;
     }
