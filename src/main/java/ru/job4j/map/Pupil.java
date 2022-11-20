@@ -1,16 +1,9 @@
-package ru.job4j.stream;
+package ru.job4j.map;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Pupil {
-    private final String name;
-    private final List<Subject> subjects;
-
-    public Pupil(String name, List<Subject> subjects) {
-        this.name = name;
-        this.subjects = subjects;
-    }
+public record Pupil(String name, List<Subject> subjects) {
 
     public String getName() {
         return name;

@@ -2,18 +2,7 @@ package ru.job4j.stream;
 
 import java.util.Objects;
 
-public class Tuple {
-    private final String name;
-    private final double score;
-
-    public Tuple(String name, double score) {
-        this.name = name;
-        this.score = score;
-    }
-
-    public String getName() {
-        return name;
-    }
+public record Tuple(String name, double score) {
 
     public double getScore() {
         return score;

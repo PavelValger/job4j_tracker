@@ -1,6 +1,9 @@
 package ru.job4j.stream;
 
 import org.junit.Test;
+import ru.job4j.map.Pupil;
+import ru.job4j.map.Subject;
+
 import java.util.List;
 import java.util.stream.Stream;
 
