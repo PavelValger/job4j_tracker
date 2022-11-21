@@ -1,56 +1,79 @@
 package ru.job4j.map;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class AnalyzeByMap {
-    public static double averageScore(Stream<Pupil> stream) {
-        return stream.flatMap(pupil -> pupil.getSubjects().stream())
-                .mapToInt(Subject::getScore)
-                .average()
-                .orElse(0D);
+    public static double averageScore(List<Pupil> pupils) {
+        double score = 0D;
+        int count = 0;
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.getSubjects()) {
+                count++;
+                score += subject.getScore();
+            }
+        }
+        return count != 0 ? score / count : score;
     }
 
-    public static List<Label> averageScoreByPupil(Stream<Pupil> stream) {
-        return stream.map(pupil -> new Label(
-                        pupil.getName(),
-                        pupil.getSubjects().stream()
-                                .mapToInt(Subject::getScore)
-                                .average()
-                                .orElse(0D)))
-                .collect(Collectors.toList());
+    public static List<Label> averageScoreByPupil(List<Pupil> pupils) {
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            double score = 0D;
+            for (Subject subject : pupil.getSubjects()) {
+                score += subject.getScore();
+            }
+            if (!pupil.getSubjects().isEmpty()) {
+                rsl.add(new Label(pupil.getName(), score / pupil.getSubjects().size()));
+            }
+        }
+        return rsl;
     }
 
-    public static List<Label> averageScoreBySubject(Stream<Pupil> stream) {
-        return stream.flatMap(pupil -> pupil.getSubjects().stream())
-                .collect(Collectors.groupingBy(Subject::getName,
-                        LinkedHashMap::new,
-                        Collectors.averagingDouble(Subject::getScore)))
-                .entrySet().stream()
-                .map(k -> new Label(k.getKey(), k.getValue()))
-                .collect(Collectors.toList());
+    public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.getSubjects()) {
+                int score = map.getOrDefault(subject.getName(), 0);
+                score += subject.getScore();
+                map.put(subject.getName(), score);
+            }
+        }
+        for (var entry : map.entrySet()) {
+            if (!pupils.isEmpty()) {
+                rsl.add(new Label(entry.getKey(), (double) entry.getValue() / pupils.size()));
+            }
+        }
+        return rsl;
     }
 
-    public static Label bestStudent(Stream<Pupil> stream) {
-        return stream.map(pupil -> new Label(
-                        pupil.getName(),
-                        pupil.getSubjects().stream()
-                                .mapToInt(Subject::getScore)
-                                .sum()))
-                .max(Comparator.comparingDouble(Label::score))
-                .orElse(null);
+    public static Label bestStudent(List<Pupil> pupils) {
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            double score = 0D;
+            for (Subject subject : pupil.getSubjects()) {
+                score += subject.getScore();
+            }
+            rsl.add(new Label(pupil.getName(), score));
+        }
+        rsl.sort(Comparator.naturalOrder());
+        return !rsl.isEmpty() ? rsl.get(rsl.size() - 1) : null;
     }
 
-    public static Label bestSubject(Stream<Pupil> stream) {
-        return stream.flatMap(pupil -> pupil.getSubjects().stream())
-                .collect(Collectors.groupingBy(Subject::getName,
-                        Collectors.summingDouble(Subject::getScore)))
-                .entrySet().stream()
-                .map(k -> new Label(k.getKey(), k.getValue()))
-                .max(Comparator.comparingDouble(Label::score))
-                .orElse(null);
+    public static Label bestSubject(List<Pupil> pupils) {
+        Map<String, Integer> map = new LinkedHashMap<>();
+        List<Label> rsl = new ArrayList<>();
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.getSubjects()) {
+                int score = map.getOrDefault(subject.getName(), 0);
+                score += subject.getScore();
+                map.put(subject.getName(), score);
+            }
+        }
+        for (var entry : map.entrySet()) {
+            rsl.add(new Label(entry.getKey(), (double) entry.getValue()));
+        }
+        rsl.sort(Comparator.naturalOrder());
+        return !rsl.isEmpty() ? rsl.get(rsl.size() - 1) : null;
     }
 }

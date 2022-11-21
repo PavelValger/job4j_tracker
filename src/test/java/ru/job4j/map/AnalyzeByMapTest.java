@@ -2,7 +2,6 @@ package ru.job4j.map;
 
 import org.junit.jupiter.api.Test;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.offset;
@@ -11,7 +10,7 @@ class AnalyzeByMapTest {
     @Test
     public void whenAverageScore() {
         double average = AnalyzeByMap.averageScore(
-                Stream.of(
+                List.of(
                         new Pupil("Ivanov",
                                 List.of(
                                         new Subject("Math", 100),
@@ -41,7 +40,7 @@ class AnalyzeByMapTest {
     @Test
     public void whenListOfPupilAverage() {
         List<Label> average = AnalyzeByMap.averageScoreByPupil(
-                Stream.of(
+                List.of(
                         new Pupil("Ivanov",
                                 List.of(
                                         new Subject("Math", 100),
@@ -75,7 +74,7 @@ class AnalyzeByMapTest {
     @Test
     public void whenListOfSubjectAverage() {
         List<Label> average = AnalyzeByMap.averageScoreBySubject(
-                Stream.of(
+                List.of(
                         new Pupil("Ivanov",
                                 List.of(
                                         new Subject("Math", 70),
@@ -109,7 +108,7 @@ class AnalyzeByMapTest {
     @Test
     public void whenBestPupil() {
         Label best = AnalyzeByMap.bestStudent(
-                Stream.of(
+                List.of(
                         new Pupil("Ivanov",
                                 List.of(
                                         new Subject("Math", 100),
@@ -139,7 +138,7 @@ class AnalyzeByMapTest {
     @Test
     public void whenBestSubject() {
         Label best = AnalyzeByMap.bestSubject(
-                Stream.of(
+                List.of(
                         new Pupil("Ivanov",
                                 List.of(
                                         new Subject("Math", 100),
@@ -164,5 +163,19 @@ class AnalyzeByMapTest {
                 )
         );
         assertThat(best).isEqualTo(new Label("Math", 250D));
+    }
+
+    @Test
+    public void whenAbsentBestSubject() {
+        Label best = AnalyzeByMap.bestSubject(
+                List.of());
+        assertThat(best).isNull();
+    }
+
+    @Test
+    public void whenAbsentAverageScore() {
+        double average = AnalyzeByMap.averageScore(
+                List.of());
+        assertThat(average).isZero();
     }
 }
