@@ -2,7 +2,12 @@ package ru.job4j.tracker;
 
 import java.util.List;
 
-public record DeleteAllAction(Output out) implements UserAction {
+public class DeleteAllAction implements UserAction {
+    private final Output out;
+
+    public DeleteAllAction(Output out) {
+        this.out = out;
+    }
 
     @Override
     public String name() {
@@ -13,10 +18,8 @@ public record DeleteAllAction(Output out) implements UserAction {
     public boolean execute(Input input, Store tracker) {
         out.println("=== Delete all items ===");
         List<Item> clear = tracker.findAll();
-        int count = 1;
-        while (count <= clear.size()) {
-            tracker.delete(count);
-            count++;
+        for (Item item : clear) {
+            tracker.delete(item.getId());
         }
         System.gc();
         out.println("Хранилище очищено");

@@ -1,7 +1,11 @@
 package ru.job4j.tracker;
 
-public record CreateMuchAction(Output out) implements UserAction {
-    private static final Integer VALUE = 100000;
+public class CreateMuchAction implements UserAction {
+    private final Output out;
+
+    public CreateMuchAction(Output out) {
+        this.out = out;
+    }
 
     @Override
     public String name() {
@@ -11,12 +15,11 @@ public record CreateMuchAction(Output out) implements UserAction {
     @Override
     public boolean execute(Input input, Store tracker) {
         out.println("=== Create a new much Item ====");
-        int count = 1;
-        while (count <= VALUE) {
-            String name = String.valueOf(count);
+        int count = Integer.parseInt(input.askStr("Enter count: "));
+        for (int i = 1; i <= count; i++) {
+            String name = String.valueOf(i);
             Item item = new Item(name);
             tracker.add(item);
-            count++;
         }
         out.println("Заявки добавлены");
         return true;
