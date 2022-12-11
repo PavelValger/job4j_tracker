@@ -53,7 +53,6 @@ public class DirFileCache extends AbstractCache<String, String> {
     @Override
     public String load(String key) {
         var rsl = String.join(", ", read(key));
-        put(key, rsl);
         System.out.println("Загрузка в кэш прошла успешно");
         return rsl;
     }

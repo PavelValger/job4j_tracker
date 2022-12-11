@@ -8,12 +8,13 @@ public abstract class AbstractCache<K, V> {
     private final Map<K, SoftReference<V>> cache = new HashMap<>();
 
     public void put(K key, V value) {
-        cache.put(key, new SoftReference<>(value));
+        cache.putIfAbsent(key, new SoftReference<>(value));
     }
 
     public V get(K key) {
-        var strongLink = cache.get(key);
-        return strongLink != null ? strongLink.get() : load(key);
+        var softReference = cache.get(key);
+        V strongReference = softReference != null ? softReference.get() : load(key);
+        return strongReference != null ? strongReference : load(key);
     }
 
     public abstract V load(K key);

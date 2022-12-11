@@ -27,10 +27,14 @@ public class Emulator {
             int action = Integer.parseInt(scanner.nextLine());
             if (LOAD == action) {
                 System.out.println(NAME);
-                dirFileCache.load(scanner.nextLine());
+                var key = scanner.nextLine();
+                dirFileCache.put(key, dirFileCache.load(key));
             } else if (GET == action) {
                 System.out.println(NAME);
-                System.out.println(dirFileCache.get(scanner.nextLine()));
+                var key = scanner.nextLine();
+                var value = dirFileCache.get(key);
+                dirFileCache.put(key, value);
+                System.out.println(value);
             } else {
                 run = false;
                 System.out.println(EXIT);
