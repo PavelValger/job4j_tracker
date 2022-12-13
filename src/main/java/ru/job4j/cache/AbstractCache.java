@@ -8,14 +8,21 @@ public abstract class AbstractCache<K, V> {
     private final Map<K, SoftReference<V>> cache = new HashMap<>();
 
     public void put(K key, V value) {
-        cache.putIfAbsent(key, new SoftReference<>(value));
+        cache.put(key, new SoftReference<>(value));
     }
 
     public V get(K key) {
-        var softReference = cache.get(key);
-        V strongReference = softReference != null ? softReference.get() : load(key);
-        return strongReference != null ? strongReference : load(key);
+        SoftReference<V> softReference = cache.getOrDefault(key, new SoftReference<>(null));
+        V strongReference = softReference.get();
+        boolean empty = strongReference == null;
+        V loading = null;
+        if (empty) {
+            loading = load(key);
+            put(key, loading);
+            System.out.println("Загрузка данных в кэш прошла успешно");
+        }
+        return empty ? loading : strongReference;
     }
 
-    public abstract V load(K key);
+    protected abstract V load(K key);
 }
