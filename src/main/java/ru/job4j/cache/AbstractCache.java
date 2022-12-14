@@ -12,16 +12,13 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) {
-        SoftReference<V> softReference = cache.getOrDefault(key, new SoftReference<>(null));
-        V strongReference = softReference.get();
-        boolean empty = strongReference == null;
-        V loading = null;
-        if (empty) {
-            loading = load(key);
-            put(key, loading);
+        V value = cache.getOrDefault(key, new SoftReference<>(null)).get();
+        if (value == null) {
+            value = load(key);
+            put(key, value);
             System.out.println("Загрузка данных в кэш прошла успешно");
         }
-        return empty ? loading : strongReference;
+        return value;
     }
 
     protected abstract V load(K key);
