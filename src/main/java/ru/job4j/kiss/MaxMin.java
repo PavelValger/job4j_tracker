@@ -13,7 +13,6 @@ public class MaxMin {
     }
 
     private <T> T calculation(List<T> value, BiPredicate<T, T> predicate) {
-        validate(value);
         T rsl = value.get(0);
         for (int i = 1; i < value.size(); i++) {
             T second = value.get(i);
@@ -25,12 +24,12 @@ public class MaxMin {
     }
 
     public <T> T max(List<T> value, Comparator<T> comparator) {
-        BiPredicate<T, T> predicate = (rsl, second) -> comparator.compare(rsl, second) < 0;
-        return calculation(value, predicate);
+        validate(value);
+        return calculation(value, (rsl, second) -> comparator.compare(rsl, second) < 0);
     }
 
     public <T> T min(List<T> value, Comparator<T> comparator) {
-        BiPredicate<T, T> predicate = (rsl, second) -> comparator.compare(rsl, second) > 0;
-        return calculation(value, predicate);
+        validate(value);
+        return calculation(value, (rsl, second) -> comparator.compare(rsl, second) > 0);
     }
 }

@@ -26,10 +26,20 @@ class MaxMinTest {
     }
 
     @Test
-    void whenListIsEmptyThenException() {
+    void whenMinAndListIsEmptyThenException() {
         List<String> stringList = new ArrayList<>();
         Comparator<String> comparator = String::compareTo;
         assertThatThrownBy(() -> maxMin.min(stringList, comparator))
+                .isInstanceOf(IllegalArgumentException.class)
+                .message()
+                .isNotEmpty();
+    }
+
+    @Test
+    void whenMaxAndListIsEmptyThenException() {
+        List<String> stringList = new ArrayList<>();
+        Comparator<String> comparator = String::compareTo;
+        assertThatThrownBy(() -> maxMin.max(stringList, comparator))
                 .isInstanceOf(IllegalArgumentException.class)
                 .message()
                 .isNotEmpty();
