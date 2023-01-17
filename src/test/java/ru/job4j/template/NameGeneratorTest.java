@@ -11,7 +11,7 @@ class NameGeneratorTest {
     private final Generator nameGenerator = new NameGenerator();
 
     /**
-     * Тест проверяет работу генератора
+     * РўРµСЃС‚ РїСЂРѕРІРµСЂСЏРµС‚ СЂР°Р±РѕС‚Сѓ РіРµРЅРµСЂР°С‚РѕСЂР°
      */
     @Test
     void checkGenerator() {
@@ -24,7 +24,7 @@ class NameGeneratorTest {
     }
 
     /**
-     * Тест кидает исключение, если шаблон null
+     * РўРµСЃС‚ РєРёРґР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё С€Р°Р±Р»РѕРЅ null
      */
     @Test
     void whenTemplateIsNullThenException() {
@@ -37,7 +37,7 @@ class NameGeneratorTest {
     }
 
     /**
-     * Тест кидает исключение, если карта null
+     * РўРµСЃС‚ РєРёРґР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё РєР°СЂС‚Р° null
      */
     @Test
     void whenMapIsNullThenException() {
@@ -50,7 +50,7 @@ class NameGeneratorTest {
     }
 
     /**
-     * Тест кидает исключение, если ключ не найден
+     * РўРµСЃС‚ РєРёРґР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё РєР»СЋС‡ РЅРµ РЅР°Р№РґРµРЅ
      */
     @Test
     void whenKeyNotFoundThenException() {
@@ -65,7 +65,7 @@ class NameGeneratorTest {
     }
 
     /**
-     * Тест кидает исключение, если размер карты args больше двух.
+     * РўРµСЃС‚ РєРёРґР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РјРµСЂ РєР°СЂС‚С‹ args Р±РѕР»СЊС€Рµ РґРІСѓС….
      */
     @Test
     void whenSizeMapOverTwoThenException() {
