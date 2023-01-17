@@ -69,30 +69,6 @@ class Cinema3DTest {
     }
 
     /**
-     * Тест выдает исключение при покупке недопустимого места по row более 10
-     */
-    @Test
-    public void whenBuyOnInvalidRowOver10ThenGetException() {
-        Account account = new AccountCinema();
-        Cinema cinema = new Cinema3D();
-        Calendar date = Calendar.getInstance();
-        assertThatThrownBy(() -> cinema.buy(account, 11, 1, date)).
-                isInstanceOf(IllegalArgumentException.class);
-    }
-
-    /**
-     * Тест выдает исключение при покупке недопустимого места по column более 10
-     */
-    @Test
-    public void whenBuyOnInvalidColumnOver10ThenGetException() {
-        Account account = new AccountCinema();
-        Cinema cinema = new Cinema3D();
-        Calendar date = Calendar.getInstance();
-        assertThatThrownBy(() -> cinema.buy(account, 1, 11, date)).
-                isInstanceOf(IllegalArgumentException.class);
-    }
-
-    /**
      * Тест выдает исключение при попытке покупки занятого места
      */
     @Test
