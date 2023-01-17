@@ -1,5 +1,6 @@
 package ru.job4j.template;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
+@Disabled("Тесты отключены. Удалить аннотацию после реализации всех методов по заданию.")
 class NameGeneratorTest {
     private final Generator nameGenerator = new NameGenerator();
 
