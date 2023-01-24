@@ -23,15 +23,21 @@ class ProgrammersReportTest {
         store.add(worker);
         store.add(specialist);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
-        Report engine = new ProgrammersReport(store, parser);
-        String expect = String.format("%s%n%s%n%s%n%s%n%s%n%s%n%s%n",
-                "-----------------------------------------------------------",
-                "Name      |Hired             |Fired             |Salary    ",
-                "-----------------------------------------------------------",
-                "Ivan      |25:02:2015 00:00  |15:05:2020 00:00  |200.0     ",
-                "-----------------------------------------------------------",
-                "Igor      |25:02:2015 00:00  |15:05:2020 00:00  |100.0     ",
-                "-----------------------------------------------------------");
-        assertThat(engine.generate(em -> true)).isEqualTo(expect);
+        String delimiter = ",";
+        Report engine = new ProgrammersReport(store, parser, delimiter);
+        StringBuilder expect = new StringBuilder()
+                .append("Name,Hired,Fired,Salary")
+                .append(System.lineSeparator())
+                .append(worker.getName()).append(delimiter)
+                .append(parser.parse(worker.getHired())).append(delimiter)
+                .append(parser.parse(worker.getFired())).append(delimiter)
+                .append(worker.getSalary())
+                .append(System.lineSeparator())
+                .append(specialist.getName()).append(delimiter)
+                .append(parser.parse(specialist.getHired())).append(delimiter)
+                .append(parser.parse(specialist.getFired())).append(delimiter)
+                .append(specialist.getSalary())
+                .append(System.lineSeparator());
+        assertThat(engine.generate(em -> true)).isEqualTo(expect.toString());
     }
 }

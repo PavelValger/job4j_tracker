@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.function.Predicate;
 
 public class AccountingReport implements Report {
+    private static final String SEPARATOR = System.lineSeparator();
     private final Store store;
     private final DateTimeParser<Calendar> dateTimeParser;
     private final CurrencyConverter converter;
@@ -28,13 +29,14 @@ public class AccountingReport implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append(String.format("Name; Hired; Fired; Salary;%n"));
+        text.append(String.format("Name; Hired; Fired; Salary;%s", SEPARATOR));
         for (Employee employee : store.findBy(filter)) {
-            text.append(String.format("%s %s %s %s%n",
+            text.append(String.format("%s %s %s %s%s",
                     employee.getName(),
                     dateTimeParser.parse(employee.getHired()),
                     dateTimeParser.parse(employee.getFired()),
-                    converter.convert(source, employee.getSalary(), target)));
+                    converter.convert(source, employee.getSalary(), target),
+                    SEPARATOR));
         }
         return text.toString();
     }

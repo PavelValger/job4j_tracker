@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class HrReport implements Report {
+    private static final String SEPARATOR = System.lineSeparator();
     private final Store store;
     private final Comparator<Employee> comparator;
 
@@ -19,13 +20,14 @@ public class HrReport implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append(String.format("Name; Salary;%n"));
+        text.append(String.format("Name; Salary;%s", SEPARATOR));
         List<Employee> list = store.findBy(filter);
         list.sort(comparator);
         for (Employee employee : list) {
-            text.append(String.format("%s %s%n",
+            text.append(String.format("%s %s%s",
                     employee.getName(),
-                    employee.getSalary()));
+                    employee.getSalary(),
+                    SEPARATOR));
         }
         return text.toString();
     }
