@@ -1,32 +1,32 @@
 package ru.job4j.ood.srp.report;
 
-import ru.job4j.ood.srp.model.Employee;
+import ru.job4j.ood.srp.model.BaseReport;
 import ru.job4j.ood.srp.store.Store;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class HrReport implements Report {
+public class HrReport<T extends BaseReport> implements Report<T> {
     private static final String SEPARATOR = System.lineSeparator();
-    private final Store store;
-    private final Comparator<Employee> comparator;
+    private final Store<T> store;
+    private final Comparator<T> comparator;
 
-    public HrReport(Store store, Comparator<Employee> comparator) {
+    public HrReport(Store<T> store, Comparator<T> comparator) {
         this.store = store;
         this.comparator = comparator;
     }
 
     @Override
-    public String generate(Predicate<Employee> filter) {
+    public String generate(Predicate<T> filter) {
         StringBuilder text = new StringBuilder();
         text.append(String.format("Name; Salary;%s", SEPARATOR));
-        List<Employee> list = store.findBy(filter);
+        List<T> list = store.findBy(filter);
         list.sort(comparator);
-        for (Employee employee : list) {
+        for (T obj : list) {
             text.append(String.format("%s %s%s",
-                    employee.getName(),
-                    employee.getSalary(),
+                    obj.getName(),
+                    obj.getSalary(),
                     SEPARATOR));
         }
         return text.toString();

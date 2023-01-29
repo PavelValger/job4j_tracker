@@ -14,7 +14,7 @@ class HrReportTest {
 
     @Test
     void whenHrReport() {
-        MemStore store = new MemStore();
+        MemStore<Employee> store = new MemStore<>();
         Calendar now = new GregorianCalendar(2015, Calendar.FEBRUARY, 25);
         Calendar exit = new GregorianCalendar(2020, Calendar.MAY, 15);
         Employee worker = new Employee("Ivan", now, exit, 200);
@@ -23,7 +23,7 @@ class HrReportTest {
         store.add(worker);
         store.add(specialist);
         store.add(expert);
-        Report engine = new HrReport(store, new DescendingSalaryOrder());
+        Report<Employee> engine = new HrReport<>(store, new DescendingSalaryOrder());
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary;")
                 .append(System.lineSeparator())

@@ -18,7 +18,7 @@ class AccountingReportTest {
 
     @Test
     void whenAccountingReport() {
-        MemStore store = new MemStore();
+        MemStore<Employee> store = new MemStore<>();
         Calendar now = new GregorianCalendar(2015, Calendar.FEBRUARY, 25);
         Calendar exit = new GregorianCalendar(2020, Calendar.MAY, 15);
         Employee worker = new Employee("Ivan", now, exit, 100);
@@ -27,7 +27,8 @@ class AccountingReportTest {
         store.add(specialist);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         CurrencyConverter converter = new InMemoryCurrencyConverter();
-        Report engine = new AccountingReport(store, parser, converter, Currency.RUB, Currency.USD);
+        Report<Employee> engine = new AccountingReport<>(
+                store, parser, converter, Currency.RUB, Currency.USD);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())

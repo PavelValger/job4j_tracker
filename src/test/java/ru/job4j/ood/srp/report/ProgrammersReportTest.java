@@ -15,7 +15,7 @@ class ProgrammersReportTest {
 
     @Test
     void whenProgrammersReport() {
-        MemStore store = new MemStore();
+        MemStore<Employee> store = new MemStore<>();
         Calendar now = new GregorianCalendar(2015, Calendar.FEBRUARY, 25);
         Calendar exit = new GregorianCalendar(2020, Calendar.MAY, 15);
         Employee worker = new Employee("Ivan", now, exit, 200);
@@ -24,7 +24,7 @@ class ProgrammersReportTest {
         store.add(specialist);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         String delimiter = ",";
-        Report engine = new ProgrammersReport(store, parser, delimiter);
+        Report<Employee> engine = new ProgrammersReport<>(store, parser, delimiter);
         StringBuilder expect = new StringBuilder()
                 .append("Name,Hired,Fired,Salary")
                 .append(System.lineSeparator())

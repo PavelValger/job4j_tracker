@@ -1,19 +1,19 @@
 package ru.job4j.ood.srp.report;
 
 import ru.job4j.ood.srp.formatter.DateTimeParser;
-import ru.job4j.ood.srp.model.Employee;
+import ru.job4j.ood.srp.model.BaseReport;
 import ru.job4j.ood.srp.store.Store;
 
 import java.util.Calendar;
 import java.util.function.Predicate;
 
-public class ProgrammersReport implements Report {
+public class ProgrammersReport<T extends BaseReport> implements Report<T> {
     private static final String SEPARATOR = System.lineSeparator();
-    private final Store store;
+    private final Store<T> store;
     private final DateTimeParser<Calendar> dateTimeParser;
     private final String delimiter;
 
-    public ProgrammersReport(Store store,
+    public ProgrammersReport(Store<T> store,
                              DateTimeParser<Calendar> dateTimeParser, String delimiter) {
         this.store = store;
         this.dateTimeParser = dateTimeParser;
@@ -21,22 +21,22 @@ public class ProgrammersReport implements Report {
     }
 
     @Override
-    public String generate(Predicate<Employee> filter) {
+    public String generate(Predicate<T> filter) {
         StringBuilder text = new StringBuilder();
         text.append(String.format("Name%sHired%sFired%sSalary%s",
                 delimiter,
                 delimiter,
                 delimiter,
                 SEPARATOR));
-        for (Employee employee : store.findBy(filter)) {
+        for (T obj : store.findBy(filter)) {
             text.append(String.format("%s%s%s%s%s%s%s%s",
-                    employee.getName(),
+                    obj.getName(),
                     delimiter,
-                    dateTimeParser.parse(employee.getHired()),
+                    dateTimeParser.parse(obj.getHired()),
                     delimiter,
-                    dateTimeParser.parse(employee.getFired()),
+                    dateTimeParser.parse(obj.getFired()),
                     delimiter,
-                    employee.getSalary(),
+                    obj.getSalary(),
                     SEPARATOR));
         }
         return text.toString();

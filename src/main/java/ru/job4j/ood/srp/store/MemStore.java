@@ -1,22 +1,20 @@
 package ru.job4j.ood.srp.store;
 
-import ru.job4j.ood.srp.model.Employee;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class MemStore implements Store {
-    private final List<Employee> employees = new ArrayList<>();
+public class MemStore<T> implements Store<T> {
+    private final List<T> list = new ArrayList<>();
 
     @Override
-    public void add(Employee em) {
-        employees.add(em);
+    public void add(T obj) {
+        list.add(obj);
     }
 
     @Override
-    public List<Employee> findBy(Predicate<Employee> filter) {
-        return employees.stream().filter(filter).collect(Collectors.toList());
+    public List<T> findBy(Predicate<T> filter) {
+        return list.stream().filter(filter).collect(Collectors.toList());
     }
 }

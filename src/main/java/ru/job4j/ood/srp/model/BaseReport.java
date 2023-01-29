@@ -1,19 +1,14 @@
 package ru.job4j.ood.srp.model;
 
 import java.util.Calendar;
-import java.util.Objects;
 
-public class Employee extends BaseReport {
+public abstract class BaseReport {
     private String name;
     private Calendar hired;
     private Calendar fired;
     private double salary;
 
-    public Employee(String name, Calendar hired, Calendar fired, double salary) {
-        this.name = name;
-        this.hired = hired;
-        this.fired = fired;
-        this.salary = salary;
+    public BaseReport() {
     }
 
     public String getName() {
@@ -46,22 +41,5 @@ public class Employee extends BaseReport {
 
     public void setSalary(double salary) {
         this.salary = salary;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Employee employee = (Employee) o;
-        return Objects.equals(name, employee.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
     }
 }
