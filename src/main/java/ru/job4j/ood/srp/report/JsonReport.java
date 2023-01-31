@@ -2,21 +2,22 @@ package ru.job4j.ood.srp.report;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.Store;
 
 import java.util.function.Predicate;
 
-public class JSONReport<T> implements Report<T> {
-    private final Store<T> store;
+public class JsonReport implements Report<Employee> {
+    private final Store<Employee> store;
     private final Gson gson;
 
-    public JSONReport(Store<T> store) {
+    public JsonReport(Store<Employee> store) {
         this.store = store;
         this.gson = new GsonBuilder().create();
     }
 
     @Override
-    public String generate(Predicate<T> filter) {
+    public String generate(Predicate<Employee> filter) {
         return gson.toJson(store.findBy(filter));
     }
 }

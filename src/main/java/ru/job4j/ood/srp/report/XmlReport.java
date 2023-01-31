@@ -10,11 +10,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.function.Predicate;
 
-public class XMLReport<T extends Person> implements Report<T> {
-    private final Store<T> store;
+public class XmlReport implements Report<Employee> {
+    private final Store<Employee> store;
     private final Marshaller marshaller;
 
-    public XMLReport(Store<T> store) {
+    public XmlReport(Store<Employee> store) {
         this.store = store;
         try {
             JAXBContext context = JAXBContext.newInstance(Wrapper.class);
@@ -26,10 +26,10 @@ public class XMLReport<T extends Person> implements Report<T> {
     }
 
     @Override
-    public String generate(Predicate<T> filter) {
+    public String generate(Predicate<Employee> filter) {
         String xml;
         try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(new Wrapper<>(store.findBy(filter)), writer);
+            marshaller.marshal(new Wrapper(store.findBy(filter)), writer);
             xml = writer.getBuffer().toString();
         } catch (IOException | JAXBException e) {
             throw new RuntimeException(e);

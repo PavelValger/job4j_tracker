@@ -26,8 +26,9 @@ class AccountingReportTest {
         store.add(worker);
         store.add(specialist);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
+        System.out.println(parser.parse(now));
         CurrencyConverter converter = new InMemoryCurrencyConverter();
-        Report<Employee> engine = new AccountingReport<>(
+        Report<Employee> engine = new AccountingReport(
                 store, parser, converter, Currency.RUB, Currency.USD);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")

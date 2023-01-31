@@ -4,21 +4,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @XmlRootElement(name = "wrapper")
-public class Wrapper<T extends Person> {
-    private List<T> obj;
+public class Wrapper {
+    private List<Employee> employees;
 
     public Wrapper() {
     }
 
-    public Wrapper(List<T> obj) {
-        this.obj = obj;
+    public Wrapper(List<Employee> obj) {
+        this.employees = obj;
     }
 
-    public List<T> getObj() {
-        return obj;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setObj(List<T> obj) {
-        this.obj = obj;
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }

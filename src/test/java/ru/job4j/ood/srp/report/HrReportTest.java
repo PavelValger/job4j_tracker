@@ -23,7 +23,7 @@ class HrReportTest {
         store.add(worker);
         store.add(specialist);
         store.add(expert);
-        Report<Employee> engine = new HrReport<>(store, new DescendingSalaryOrder());
+        Report<Employee> engine = new HrReport(store, new DescendingSalaryOrder());
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary;")
                 .append(System.lineSeparator())
