@@ -1,6 +1,9 @@
 package ru.job4j.ood.srp.model;
 
+import ru.job4j.ood.srp.formatter.CalendarAdapterXml;
+
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -9,7 +12,9 @@ import java.util.Objects;
 public class Employee {
     @XmlAttribute
     private String name;
+    @XmlJavaTypeAdapter(CalendarAdapterXml.class)
     private Calendar hired;
+    @XmlJavaTypeAdapter(CalendarAdapterXml.class)
     private Calendar fired;
     @XmlAttribute
     private double salary;
