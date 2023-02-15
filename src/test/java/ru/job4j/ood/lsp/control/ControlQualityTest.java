@@ -1,14 +1,15 @@
 package ru.job4j.ood.lsp.control;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.lsp.model.Barbecue;
 import ru.job4j.ood.lsp.model.Cheese;
 import ru.job4j.ood.lsp.model.Food;
+import ru.job4j.ood.lsp.model.Milk;
 import ru.job4j.ood.lsp.store.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.time.temporal.ChronoUnit.HOURS;
 import static org.assertj.core.api.Assertions.*;
 
 class ControlQualityTest {
@@ -16,14 +17,14 @@ class ControlQualityTest {
     @Test
     void whenAddWarehouse() {
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
+                LocalDateTime.of(2023, 2, 15, 14, 0),
                 LocalDateTime.of(2023, 2, 20, 14, 0),
                 500f, 0.5f);
         AbstractStore warehouse = new Warehouse();
-        warehouse.add(cheese, 10f);
-        warehouse.add(cheese, 10f);
-        assertThat(warehouse.getList().size()).isEqualTo(2);
-        assertThat(warehouse.getList().get(0)).isEqualTo(cheese);
+        warehouse.add(cheese);
+        warehouse.add(cheese);
+        assertThat(warehouse.getAll().size()).isEqualTo(2);
+        assertThat(warehouse.getAll().get(0)).isEqualTo(cheese);
     }
 
     @Test
@@ -33,29 +34,23 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 12, 14, 0),
                 500f, 0.5f);
         AbstractStore trash = new Trash();
-        trash.add(cheese, 110f);
-        trash.add(cheese, 110f);
-        assertThat(trash.getList().size()).isEqualTo(2);
-        assertThat(trash.getList().get(0)).isEqualTo(cheese);
+        trash.add(cheese);
+        trash.add(cheese);
+        assertThat(trash.getAll().size()).isEqualTo(2);
+        assertThat(trash.getAll().get(0)).isEqualTo(cheese);
     }
 
     @Test
     void whenAddShop() {
         Food cheese = new Cheese("Cheese",
                 LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 15, 14, 0),
+                LocalDateTime.of(2023, 2, 16, 14, 0),
                 500f, 0.5f);
-        LocalDateTime createDate = cheese.getCreateDate();
-        LocalDateTime expiryDate = cheese.getExpiryDate();
-        LocalDateTime now = LocalDateTime.now();
-        float shelfLife = (float) HOURS.between(createDate, expiryDate);
-        float storageTime = (float) HOURS.between(createDate, now);
-        float foodQuality = (storageTime / shelfLife) * 100;
         AbstractStore shop = new Shop();
-        shop.add(cheese, foodQuality);
-        assertThat(shop.getList().size()).isEqualTo(1);
-        assertThat(shop.getList().get(0).getPrice()).isEqualTo(250f);
-        assertThat(shop.getList().get(0).getName()).isEqualTo("Cheese");
+        shop.add(cheese);
+        assertThat(shop.getAll().size()).isEqualTo(1);
+        assertThat(shop.getAll().get(0).getPrice()).isEqualTo(250f);
+        assertThat(shop.getAll().get(0).getName()).isEqualTo("Cheese");
     }
 
     @Test
@@ -64,7 +59,7 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 10, 14, 0),
                 LocalDateTime.of(2023, 2, 20, 14, 0),
                 500f, 0.5f);
-        Food milk = new Cheese("Milk",
+        Food milk = new Milk("Milk",
                 LocalDateTime.of(2023, 2, 10, 14, 0),
                 LocalDateTime.of(2023, 4, 20, 14, 0),
                 500f, 0.5f);
@@ -78,9 +73,9 @@ class ControlQualityTest {
         ControlQuality cq = new ControlQuality(stores);
         cq.distribution(cheese);
         cq.distribution(milk);
-        assertThat(shop.getList().size()).isEqualTo(1);
-        assertThat(trash.getList().size()).isEqualTo(0);
-        assertThat(warehouse.getList().size()).isEqualTo(1);
+        assertThat(shop.getAll().size()).isEqualTo(1);
+        assertThat(trash.getAll().size()).isEqualTo(0);
+        assertThat(warehouse.getAll().size()).isEqualTo(1);
     }
 
     @Test
@@ -113,8 +108,23 @@ class ControlQualityTest {
         AbstractStore trash = new Trash();
         ControlQuality cq = new ControlQuality(stores);
         cq.distribution(cheese);
-        assertThat(shop.getList().size()).isEqualTo(0);
-        assertThat(trash.getList().size()).isEqualTo(0);
-        assertThat(warehouse.getList().size()).isEqualTo(0);
+        assertThat(shop.getAll().size()).isEqualTo(0);
+        assertThat(trash.getAll().size()).isEqualTo(0);
+        assertThat(warehouse.getAll().size()).isEqualTo(0);
+    }
+
+    @Test
+    void whenAddShopAndClear() {
+        Food cheese = new Barbecue("Barbecue",
+                LocalDateTime.of(2023, 2, 14, 14, 0),
+                LocalDateTime.of(2023, 2, 16, 14, 0),
+                500f, 0.5f);
+        AbstractStore shop = new Shop();
+        shop.add(cheese);
+        assertThat(shop.getAll().size()).isEqualTo(1);
+        assertThat(shop.getAll().get(0).getPrice()).isEqualTo(500f);
+        assertThat(shop.getAll().get(0).getName()).isEqualTo("Barbecue");
+        shop.clear();
+        assertThat(shop.getAll().size()).isEqualTo(0);
     }
 }

@@ -3,23 +3,17 @@ package ru.job4j.ood.lsp.store;
 import ru.job4j.ood.lsp.model.Food;
 
 public class Shop extends AbstractStore {
-    private static final int CRITICAL_QUALITY = 75;
 
     @Override
-    public void add(Food food, float foodQuality) {
-        if (foodQuality > CRITICAL_QUALITY) {
-            food.setPrice(food.getPrice() * food.getDiscount());
+    public boolean add(Food food) {
+        boolean rsl = false;
+        float foodQuality = foodsQuality(food);
+        if (foodQuality > 25 && foodQuality <= 100) {
+            if (foodQuality > 75) {
+                food.setPrice(food.getPrice() * food.getDiscount());
+            }
+            rsl = super.getAll().add(food);
         }
-        super.getList().add(food);
-    }
-
-    @Override
-    public int getMinQuality() {
-        return 25;
-    }
-
-    @Override
-    public int getMaxQuality() {
-        return 100;
+        return rsl;
     }
 }

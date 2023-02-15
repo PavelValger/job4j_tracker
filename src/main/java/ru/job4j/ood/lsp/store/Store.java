@@ -2,10 +2,12 @@ package ru.job4j.ood.lsp.store;
 
 import ru.job4j.ood.lsp.model.Food;
 
+import java.util.List;
+
 public interface Store {
-    void add(Food food, float foodQuality);
+    boolean add(Food food);
 
-    int getMinQuality();
+    List<Food> getAll();
 
-    int getMaxQuality();
+    void clear();
 }
