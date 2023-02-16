@@ -1,6 +1,8 @@
 package ru.job4j.ood.lsp.control;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.lsp.calculator.ExpirationCalculator;
+import ru.job4j.ood.lsp.calculator.FoodExpirationCalculator;
 import ru.job4j.ood.lsp.model.Barbecue;
 import ru.job4j.ood.lsp.model.Cheese;
 import ru.job4j.ood.lsp.model.Food;
@@ -20,7 +22,7 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 15, 14, 0),
                 LocalDateTime.of(2023, 2, 20, 14, 0),
                 500f, 0.5f);
-        AbstractStore warehouse = new Warehouse();
+        AbstractStore warehouse = new Warehouse(new FoodExpirationCalculator());
         warehouse.add(cheese);
         warehouse.add(cheese);
         assertThat(warehouse.getAll().size()).isEqualTo(2);
@@ -33,7 +35,7 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 10, 14, 0),
                 LocalDateTime.of(2023, 2, 12, 14, 0),
                 500f, 0.5f);
-        AbstractStore trash = new Trash();
+        AbstractStore trash = new Trash(new FoodExpirationCalculator());
         trash.add(cheese);
         trash.add(cheese);
         assertThat(trash.getAll().size()).isEqualTo(2);
@@ -44,9 +46,9 @@ class ControlQualityTest {
     void whenAddShop() {
         Food cheese = new Cheese("Cheese",
                 LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 16, 14, 0),
+                LocalDateTime.of(2023, 2, 17, 14, 0),
                 500f, 0.5f);
-        AbstractStore shop = new Shop();
+        AbstractStore shop = new Shop(new FoodExpirationCalculator());
         shop.add(cheese);
         assertThat(shop.getAll().size()).isEqualTo(1);
         assertThat(shop.getAll().get(0).getPrice()).isEqualTo(250f);
@@ -63,9 +65,10 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 10, 14, 0),
                 LocalDateTime.of(2023, 4, 20, 14, 0),
                 500f, 0.5f);
-        AbstractStore warehouse = new Warehouse();
-        AbstractStore shop = new Shop();
-        AbstractStore trash = new Trash();
+        ExpirationCalculator calculator = new FoodExpirationCalculator();
+        AbstractStore warehouse = new Warehouse(calculator);
+        AbstractStore shop = new Shop(calculator);
+        AbstractStore trash = new Trash(calculator);
         List<Store> stores = List.of(
                 warehouse,
                 shop,
@@ -84,9 +87,10 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 20, 14, 0),
                 LocalDateTime.of(2023, 2, 25, 14, 0),
                 500f, 0.5f);
-        AbstractStore warehouse = new Warehouse();
-        AbstractStore shop = new Shop();
-        AbstractStore trash = new Trash();
+        ExpirationCalculator calculator = new FoodExpirationCalculator();
+        AbstractStore warehouse = new Warehouse(calculator);
+        AbstractStore shop = new Shop(calculator);
+        AbstractStore trash = new Trash(calculator);
         List<Store> stores = List.of(
                 warehouse,
                 shop,
@@ -103,9 +107,10 @@ class ControlQualityTest {
                 LocalDateTime.of(2023, 2, 20, 14, 0),
                 500f, 0.5f);
         List<Store> stores = List.of();
-        AbstractStore warehouse = new Warehouse();
-        AbstractStore shop = new Shop();
-        AbstractStore trash = new Trash();
+        ExpirationCalculator calculator = new FoodExpirationCalculator();
+        AbstractStore warehouse = new Warehouse(calculator);
+        AbstractStore shop = new Shop(calculator);
+        AbstractStore trash = new Trash(calculator);
         ControlQuality cq = new ControlQuality(stores);
         cq.distribution(cheese);
         assertThat(shop.getAll().size()).isEqualTo(0);
@@ -117,9 +122,9 @@ class ControlQualityTest {
     void whenAddShopAndClear() {
         Food cheese = new Barbecue("Barbecue",
                 LocalDateTime.of(2023, 2, 14, 14, 0),
-                LocalDateTime.of(2023, 2, 16, 14, 0),
+                LocalDateTime.of(2023, 2, 17, 14, 0),
                 500f, 0.5f);
-        AbstractStore shop = new Shop();
+        AbstractStore shop = new Shop(new FoodExpirationCalculator());
         shop.add(cheese);
         assertThat(shop.getAll().size()).isEqualTo(1);
         assertThat(shop.getAll().get(0).getPrice()).isEqualTo(500f);

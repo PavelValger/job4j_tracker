@@ -1,19 +1,21 @@
 package ru.job4j.ood.lsp.store;
 
+import ru.job4j.ood.lsp.calculator.ExpirationCalculator;
 import ru.job4j.ood.lsp.model.Food;
 
 public class Shop extends AbstractStore {
+    private final ExpirationCalculator expirationCalculator;
+
+    public Shop(ExpirationCalculator expirationCalculator) {
+        this.expirationCalculator = expirationCalculator;
+    }
 
     @Override
-    public boolean add(Food food) {
-        boolean rsl = false;
-        float foodQuality = foodsQuality(food);
-        if (foodQuality > 25 && foodQuality <= 100) {
-            if (foodQuality > 75) {
-                food.setPrice(food.getPrice() * food.getDiscount());
-            }
-            rsl = super.getAll().add(food);
+    protected boolean isSuitable(Food food) {
+        float foodQuality = expirationCalculator.foodsQuality(food);
+        if (foodQuality > 75) {
+            food.setPrice(food.getPrice() * food.getDiscount());
         }
-        return rsl;
+        return foodQuality > 25 && foodQuality <= 100;
     }
 }
