@@ -18,9 +18,10 @@ class ControlQualityTest {
 
     @Test
     void whenAddWarehouse() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 15, 14, 0),
-                LocalDateTime.of(2023, 2, 20, 14, 0),
+                time.minusDays(2),
+                time.plusDays(10),
                 500f, 0.5f);
         AbstractStore warehouse = new Warehouse(new FoodExpirationCalculator());
         warehouse.add(cheese);
@@ -31,9 +32,10 @@ class ControlQualityTest {
 
     @Test
     void whenAddTrash() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 12, 14, 0),
+                time.minusDays(5),
+                time.minusDays(1),
                 500f, 0.5f);
         AbstractStore trash = new Trash(new FoodExpirationCalculator());
         trash.add(cheese);
@@ -44,9 +46,10 @@ class ControlQualityTest {
 
     @Test
     void whenAddShop() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 17, 14, 0),
+                time.minusDays(5),
+                time.plusDays(1),
                 500f, 0.5f);
         AbstractStore shop = new Shop(new FoodExpirationCalculator());
         shop.add(cheese);
@@ -57,13 +60,14 @@ class ControlQualityTest {
 
     @Test
     void whenDistributeTheFoodAll() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 20, 14, 0),
+                time.minusDays(5),
+                time.plusDays(3),
                 500f, 0.5f);
         Food milk = new Milk("Milk",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 4, 20, 14, 0),
+                time.minusDays(3),
+                time.plusDays(20),
                 500f, 0.5f);
         ExpirationCalculator calculator = new FoodExpirationCalculator();
         AbstractStore warehouse = new Warehouse(calculator);
@@ -83,9 +87,10 @@ class ControlQualityTest {
 
     @Test
     void whenDistributeTheFoodThenException() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 20, 14, 0),
-                LocalDateTime.of(2023, 2, 25, 14, 0),
+                time.plusDays(1),
+                time.plusDays(2),
                 500f, 0.5f);
         ExpirationCalculator calculator = new FoodExpirationCalculator();
         AbstractStore warehouse = new Warehouse(calculator);
@@ -102,9 +107,10 @@ class ControlQualityTest {
 
     @Test
     void whenDistributeTheFoodAndStoreIsEmpty() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Cheese("Cheese",
-                LocalDateTime.of(2023, 2, 10, 14, 0),
-                LocalDateTime.of(2023, 2, 20, 14, 0),
+                time.minusDays(7),
+                time.plusDays(3),
                 500f, 0.5f);
         List<Store> stores = List.of();
         ExpirationCalculator calculator = new FoodExpirationCalculator();
@@ -120,9 +126,10 @@ class ControlQualityTest {
 
     @Test
     void whenAddShopAndClear() {
+        LocalDateTime time = LocalDateTime.now();
         Food cheese = new Barbecue("Barbecue",
-                LocalDateTime.of(2023, 2, 14, 14, 0),
-                LocalDateTime.of(2023, 2, 17, 14, 0),
+                time.minusDays(7),
+                time.plusDays(3),
                 500f, 0.5f);
         AbstractStore shop = new Shop(new FoodExpirationCalculator());
         shop.add(cheese);
