@@ -10,6 +10,10 @@ public abstract class AbstractStore implements Store {
 
     protected abstract boolean isSuitable(Food food);
 
+    protected List<Food> getList() {
+        return list;
+    }
+
     @Override
     public boolean add(Food food) {
         boolean rsl = false;

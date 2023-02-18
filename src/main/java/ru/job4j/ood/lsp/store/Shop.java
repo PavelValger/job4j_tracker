@@ -8,6 +8,7 @@ public class Shop extends AbstractStore {
     private static final int MAX_QUALITY = 100;
     private static final int DISCOUNT_QUALITY = 75;
     private final ExpirationCalculator expirationCalculator;
+    private float foodQuality;
 
     public Shop(ExpirationCalculator expirationCalculator) {
         this.expirationCalculator = expirationCalculator;
@@ -15,13 +16,19 @@ public class Shop extends AbstractStore {
 
     @Override
     protected boolean isSuitable(Food food) {
+        foodQuality = expirationCalculator.foodsQuality(food);
+        return foodQuality > MIN_QUALITY && foodQuality <= MAX_QUALITY;
+    }
+
+    @Override
+    public boolean add(Food food) {
         boolean rsl = false;
-        float foodQuality = expirationCalculator.foodsQuality(food);
-        if (foodQuality > MIN_QUALITY && foodQuality <= MAX_QUALITY) {
-            rsl = true;
+        if (isSuitable(food)) {
             if (foodQuality > DISCOUNT_QUALITY) {
                 food.setPrice(food.getPrice() * food.getDiscount());
             }
+            getList().add(food);
+            rsl = true;
         }
         return rsl;
     }
