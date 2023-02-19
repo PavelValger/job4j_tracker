@@ -14,6 +14,12 @@ public class Shop extends AbstractStore {
         this.expirationCalculator = expirationCalculator;
     }
 
+    private void setDiscount(Food food) {
+        if (foodQuality > DISCOUNT_QUALITY) {
+            food.setPrice(food.getPrice() * food.getDiscount());
+        }
+    }
+
     @Override
     protected boolean isSuitable(Food food) {
         foodQuality = expirationCalculator.foodsQuality(food);
@@ -23,11 +29,8 @@ public class Shop extends AbstractStore {
     @Override
     public boolean add(Food food) {
         boolean rsl = false;
-        if (isSuitable(food)) {
-            if (foodQuality > DISCOUNT_QUALITY) {
-                food.setPrice(food.getPrice() * food.getDiscount());
-            }
-            getList().add(food);
+        if (super.add(food)) {
+            setDiscount(food);
             rsl = true;
         }
         return rsl;
