@@ -9,7 +9,7 @@ public class Broken {
     public Broken() {
     }
 
-    private void echo() {
+    public void echo() {
     }
 
     public void turnOnMedia(Object obj) {
