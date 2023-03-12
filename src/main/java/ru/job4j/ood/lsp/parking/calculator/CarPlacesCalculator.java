@@ -1,4 +1,4 @@
 package ru.job4j.ood.lsp.parking.calculator;
 
-public class CarPlacesCalculator {
+public class CarPlacesCalculator implements PlacesCalculator {
 }
