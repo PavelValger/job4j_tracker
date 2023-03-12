@@ -1,6 +1,6 @@
 package ru.job4j.ood.lsp.parking.control;
 
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.job4j.ood.lsp.parking.calculator.CarPlacesCalculator;
 import ru.job4j.ood.lsp.parking.calculator.PlacesCalculator;
@@ -11,7 +11,7 @@ import ru.job4j.ood.lsp.parking.store.Parking;
 import ru.job4j.ood.lsp.parking.store.ParkingAtIkea;
 
 import static org.assertj.core.api.Assertions.*;
-@Ignore
+@Disabled
 class ControlOfParkingSpacesTest {
 
     @Test
