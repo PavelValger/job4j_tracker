@@ -53,9 +53,9 @@ class ControlOfParkingSpacesTest {
         ControlOfParkingSpaces control = new ControlOfParkingSpaces(parking);
         control.park(motoCar);
         control.park(truck);
-        String st = "Количество свободных парковочных мест для";
+        String st = "РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРІРѕР±РѕРґРЅС‹С… РїР°СЂРєРѕРІРѕС‡РЅС‹С… РјРµСЃС‚ РґР»СЏ";
         assertThat(parking.getSizeAllParkingSpaces()).isEqualTo(String.format(
-                "%s легковых машин = %d, %s грузовых машин= %d", st, 1, st, 1));
+                "%s Р»РµРіРєРѕРІС‹С… РјР°С€РёРЅ = %d, %s РіСЂСѓР·РѕРІС‹С… РјР°С€РёРЅ= %d", st, 1, st, 1));
     }
 
     @Test
@@ -67,8 +67,8 @@ class ControlOfParkingSpacesTest {
         ControlOfParkingSpaces control = new ControlOfParkingSpaces(parking);
         control.park(motoCar);
         control.park(truck);
-        String st = "Количество свободных парковочных мест для";
+        String st = "РљРѕР»РёС‡РµСЃС‚РІРѕ СЃРІРѕР±РѕРґРЅС‹С… РїР°СЂРєРѕРІРѕС‡РЅС‹С… РјРµСЃС‚ РґР»СЏ";
         assertThat(parking.getSizeAllParkingSpaces()).isEqualTo(String.format(
-                "%s легковых машин = %d, %s грузовых машин= %d", st, 1, st, 0));
+                "%s Р»РµРіРєРѕРІС‹С… РјР°С€РёРЅ = %d, %s РіСЂСѓР·РѕРІС‹С… РјР°С€РёРЅ= %d", st, 1, st, 0));
     }
 }
