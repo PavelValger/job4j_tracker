@@ -3,8 +3,8 @@ package ru.job4j.ood.lsp.parking.model;
 import java.util.Objects;
 
 public abstract class TransportMeans {
-    private String name;
-    private int carSize;
+    private final String name;
+    private final int carSize;
 
     public TransportMeans(String name, int carSize) {
         this.name = name;
