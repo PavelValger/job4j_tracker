@@ -19,4 +19,18 @@ public class ControlQuality {
             }
         }
     }
+
+    public void resort(Store temporaryStorage) {
+        for (Store store : stores) {
+            if (store.equals(temporaryStorage)) {
+                throw new IllegalArgumentException("The storage for products cannot be temporary");
+            }
+            for (Food food : store.getAll()) {
+                temporaryStorage.add(food);
+            }
+            store.clear();
+        }
+        temporaryStorage.getAll().forEach(this::distribution);
+        temporaryStorage.clear();
+    }
 }

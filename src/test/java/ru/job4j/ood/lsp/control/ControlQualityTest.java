@@ -139,4 +139,58 @@ class ControlQualityTest {
         shop.clear();
         assertThat(shop.getAll().size()).isEqualTo(0);
     }
+
+    @Test
+    void whenDistributionAndResortTheFoodAll() {
+        LocalDateTime time = LocalDateTime.now();
+        Food cheese = new Cheese("Cheese",
+                time.minusDays(5),
+                time.plusDays(3),
+                500f, 0.5f);
+        Food milk = new Milk("Milk",
+                time.minusDays(3),
+                time.plusDays(20),
+                500f, 0.5f);
+        ExpirationCalculator calculator = new FoodExpirationCalculator();
+        AbstractStore warehouse = new Warehouse(calculator);
+        AbstractStore shop = new Shop(calculator);
+        AbstractStore trash = new Trash(calculator);
+        List<Store> stores = List.of(
+                warehouse,
+                shop,
+                trash);
+        ControlQuality cq = new ControlQuality(stores);
+        cq.distribution(cheese);
+        cq.distribution(milk);
+        cq.resort(new TemporaryStore());
+        assertThat(shop.getAll().size()).isEqualTo(1);
+        assertThat(trash.getAll().size()).isEqualTo(0);
+        assertThat(warehouse.getAll().size()).isEqualTo(1);
+    }
+
+    @Test
+    void whenShopInResortThenException() {
+        LocalDateTime time = LocalDateTime.now();
+        Food cheese = new Cheese("Cheese",
+                time.minusDays(5),
+                time.plusDays(3),
+                500f, 0.5f);
+        Food milk = new Milk("Milk",
+                time.minusDays(3),
+                time.plusDays(20),
+                500f, 0.5f);
+        ExpirationCalculator calculator = new FoodExpirationCalculator();
+        AbstractStore warehouse = new Warehouse(calculator);
+        AbstractStore shop = new Shop(calculator);
+        AbstractStore trash = new Trash(calculator);
+        List<Store> stores = List.of(
+                warehouse,
+                shop,
+                trash);
+        ControlQuality cq = new ControlQuality(stores);
+        cq.distribution(cheese);
+        cq.distribution(milk);
+        assertThatThrownBy(() -> cq.resort(shop))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
