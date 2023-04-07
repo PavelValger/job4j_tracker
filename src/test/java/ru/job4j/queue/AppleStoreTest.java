@@ -3,6 +3,7 @@ package ru.job4j.queue;
 import org.junit.jupiter.api.Test;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 import static org.assertj.core.api.Assertions.*;
@@ -39,5 +40,6 @@ class AppleStoreTest {
         AppleStore appleStore = new AppleStore(customers, count);
         String customer = appleStore.getFirstUpsetCustomer();
         assertThat(customer).isEqualTo("Iryna");
+        assertThat(Objects.requireNonNull(appleStore.getQueue().peek()).name()).isEqualTo("Iryna");
     }
 }

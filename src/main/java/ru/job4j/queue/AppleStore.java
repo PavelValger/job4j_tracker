@@ -1,5 +1,6 @@
 package ru.job4j.queue;
 
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -21,6 +22,10 @@ public class AppleStore {
 
     public String getFirstUpsetCustomer() {
         getLastHappyCustomer();
-        return Objects.requireNonNull(queue.poll()).name();
+        return Objects.requireNonNull(queue.peek()).name();
+    }
+
+    public Queue<Customer> getQueue() {
+        return new LinkedList<>(queue);
     }
 }
