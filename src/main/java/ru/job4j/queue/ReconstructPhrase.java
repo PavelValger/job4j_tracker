@@ -24,10 +24,10 @@ public class ReconstructPhrase {
     }
 
     private String getDescendingElements() {
-        var iterator = descendingElements.descendingIterator();
         StringBuilder sbd = new StringBuilder();
-        while (iterator.hasNext()) {
-            sbd.append(iterator.next());
+        int deqSize = descendingElements.size();
+        for (int i = 0; i < deqSize; i++) {
+            sbd.append(descendingElements.pollLast());
         }
         return sbd.toString();
     }
