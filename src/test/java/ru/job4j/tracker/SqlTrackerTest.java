@@ -43,7 +43,6 @@ class SqlTrackerTest {
         }
     }
 
-    @Disabled
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -73,7 +72,6 @@ class SqlTrackerTest {
         Assertions.assertNull(tracker.findById(id));
     }
 
-    @Disabled
     @Test
     public void whenFindAllItemThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
@@ -85,7 +83,6 @@ class SqlTrackerTest {
         .isEqualTo(List.of(item, apple));
     }
 
-    @Disabled
     @Test
     public void whenFindByNameItemThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
