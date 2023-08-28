@@ -42,4 +42,9 @@ public class Item {
         this.name = name;
         this.created = created;
     }
+
+    @Override
+    public String toString() {
+        return String.format("id: %s, name: %s, created: %s", id, name, FORMATTER.format(created));
+    }
 }
