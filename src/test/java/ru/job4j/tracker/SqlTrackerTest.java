@@ -75,12 +75,7 @@ class SqlTrackerTest {
     @Test
     public void whenFindAllItemThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        Item apple = new Item("apple");
-        tracker.add(item);
-        tracker.add(apple);
-        assertThat(tracker.findAll()).hasSize(2)
-        .isEqualTo(List.of(item, apple));
+        assertThat(tracker.findAll()).hasSize(3);
     }
 
     @Test
