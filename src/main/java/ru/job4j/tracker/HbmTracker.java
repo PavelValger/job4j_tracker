@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -79,15 +80,17 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        return new ArrayList<>(search(session -> session
-                .createQuery("from Item", Item.class).list()));
+        var rsl = search(session -> session
+                .createQuery("from Item", Item.class).list());
+        return rsl == null ? Collections.emptyList() : new ArrayList<>(rsl);
     }
 
     @Override
     public List<Item> findByName(String key) {
-        return new ArrayList<>(search(session -> session
+        var rsl = search(session -> session
                 .createQuery("from Item where name = :fName", Item.class)
-                .setParameter("fName", key).list()));
+                .setParameter("fName", key).list());
+        return rsl == null ? Collections.emptyList() : new ArrayList<>(rsl);
     }
 
     @Override
