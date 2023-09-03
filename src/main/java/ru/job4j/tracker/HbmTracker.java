@@ -36,9 +36,9 @@ public class HbmTracker implements Store, AutoCloseable {
         return false;
     }
 
-    private <S> S search(Function<Session, S> function) {
+    private List<Item> searchList(Function<Session, List<Item>> function) {
         Session session = sf.openSession();
-        S result = null;
+        List<Item> result = Collections.emptyList();
         try {
             session.beginTransaction();
             result = function.apply(session);
@@ -46,7 +46,7 @@ public class HbmTracker implements Store, AutoCloseable {
         } catch (Exception e) {
             session.getTransaction().rollback();
         }
-        return result;
+        return new ArrayList<>(result);
     }
 
     @Override
@@ -80,21 +80,28 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        var rsl = search(session -> session
+        return searchList(session -> session
                 .createQuery("from Item", Item.class).list());
-        return rsl == null ? Collections.emptyList() : new ArrayList<>(rsl);
     }
 
     @Override
     public List<Item> findByName(String key) {
-        var rsl = search(session -> session
+        return searchList(session -> session
                 .createQuery("from Item where name = :fName", Item.class)
                 .setParameter("fName", key).list());
-        return rsl == null ? Collections.emptyList() : new ArrayList<>(rsl);
     }
 
     @Override
     public Item findById(int id) {
-        return search(session -> session.get(Item.class, id));
+        Session session = sf.openSession();
+        Item result = null;
+        try {
+            session.beginTransaction();
+            result = session.get(Item.class, id);
+            closeSession(session);
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+        }
+        return result;
     }
 }
