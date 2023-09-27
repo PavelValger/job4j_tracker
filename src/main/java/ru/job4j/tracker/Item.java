@@ -8,18 +8,22 @@ import ru.job4j.toone.User;
 import java.util.List;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.EqualsAndHashCode.Include;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "items")
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Item {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Include
     private Integer id;
     private String name;
     private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
