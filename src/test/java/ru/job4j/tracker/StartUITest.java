@@ -1,6 +1,11 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.output.Output;
+import ru.job4j.tracker.output.Stub;
+import ru.job4j.tracker.store.MemTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,53 +18,54 @@ public class StartUITest {
 
     @Test
     public void createItem() {
-        Output out = new StubOutput();
-        Input input = new StubInput(new String[]{"0", "test", "1"});
+        Output out = new Stub();
+        Input input = new ru.job4j.tracker.input.Stub(new String[]{"0", "test", "1"});
         MemTracker memTracker = new MemTracker();
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new CreateAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new Create(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         assertThat(memTracker.findAll().get(0).getName(), is("test"));
     }
 
     @Test
     public void editItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input input = new StubInput(new String[]{"0",
+        Input input = new ru.job4j.tracker.input.Stub(new String[]{"0",
                 String.valueOf(item.getId()), "test100", "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new EditAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new Edit(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         assertThat(memTracker.findById(item.getId()).getName(), is("test100"));
     }
 
     @Test
     public void deleteItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input in = new StubInput(new String[] {"0", String.valueOf(item.getId()), "1"});
+        Input in = new ru.job4j.tracker.input
+                .Stub(new String[] {"0", String.valueOf(item.getId()), "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new DeleteAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new Delete(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(in, memTracker, actions);
         assertThat(memTracker.findById(item.getId()), is(nullValue()));
     }
 
     @Test
     public void replaceEditItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input input = new StubInput(new String[] {"0",
+        Input input = new ru.job4j.tracker.input.Stub(new String[] {"0",
                 String.valueOf(item.getId()), "test100", "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new EditAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new Edit(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -76,13 +82,13 @@ public class StartUITest {
 
     @Test
     public void replaceShowItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input input = new StubInput(new String[] {"0", "1"});
+        Input input = new ru.job4j.tracker.input.Stub(new String[] {"0", "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new ShowAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new Show(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -99,13 +105,14 @@ public class StartUITest {
 
     @Test
     public void replaceFindIdItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input input = new StubInput(new String[] {"0", String.valueOf(item.getId()), "1"});
+        Input input = new ru.job4j.tracker.input
+                .Stub(new String[] {"0", String.valueOf(item.getId()), "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new FindIdAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new FindId(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -122,13 +129,13 @@ public class StartUITest {
 
     @Test
     public void replaceFindNameItem() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         MemTracker memTracker = new MemTracker();
         Item item = memTracker.add(new Item("test"));
-        Input input = new StubInput(new String[] {"0", "test", "1"});
+        Input input = new ru.job4j.tracker.input.Stub(new String[] {"0", "test", "1"});
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new FindNameAction(out));
-        actions.add(new ExitAction(out));
+        actions.add(new FindName(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
@@ -145,11 +152,11 @@ public class StartUITest {
 
     @Test
     public void whenInvalidExit() {
-        Output out = new StubOutput();
-        Input input = new StubInput(new String[] {"1", "0"});
+        Output out = new Stub();
+        Input input = new ru.job4j.tracker.input.Stub(new String[] {"1", "0"});
         MemTracker memTracker = new MemTracker();
         List<UserAction> actions = new ArrayList<>();
-        actions.add(new ExitAction(out));
+        actions.add(new Exit(out));
         new StartUI(out).init(input, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(

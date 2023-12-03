@@ -1,6 +1,12 @@
 package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.output.Output;
+import ru.job4j.tracker.output.Stub;
+import ru.job4j.tracker.store.MemTracker;
+import ru.job4j.tracker.store.Store;
 
 import java.time.format.DateTimeFormatter;
 
@@ -13,11 +19,11 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteEditActionTrue() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Replaced item"));
         String replacedName = "New item name";
-        UserAction rep = new EditAction(out);
+        UserAction rep = new Edit(out);
         Input input = mock(Input.class);
         when(input.askInt(any(String.class))).thenReturn(1);
         when(input.askStr(any(String.class))).thenReturn(replacedName);
@@ -30,10 +36,10 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteEditActionFalse() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Replaced item"));
-        UserAction rep = new EditAction(out);
+        UserAction rep = new Edit(out);
         Input input = mock(Input.class);
         rep.execute(input, tracker);
         String ln = System.lineSeparator();
@@ -44,10 +50,10 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteDeleteActionTrue() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Item"));
-        UserAction deleteAction = new DeleteAction(out);
+        UserAction deleteAction = new Delete(out);
         Input input = mock(Input.class);
         when(input.askInt(any(String.class))).thenReturn(1);
         deleteAction.execute(input, tracker);
@@ -59,10 +65,10 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteDeleteActionFalse() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Item"));
-        UserAction deleteAction = new DeleteAction(out);
+        UserAction deleteAction = new Delete(out);
         Input input = mock(Input.class);
         deleteAction.execute(input, tracker);
         String ln = System.lineSeparator();
@@ -72,12 +78,12 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteFindIdActionTrue() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         Item item = new Item("Item");
         tracker.add(item);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
-        UserAction findIdAction = new FindIdAction(out);
+        UserAction findIdAction = new FindId(out);
         Input input = mock(Input.class);
         when(input.askInt(any(String.class))).thenReturn(1);
         findIdAction.execute(input, tracker);
@@ -89,10 +95,10 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteFindIdActionFalse() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Item"));
-        UserAction findIdAction = new FindIdAction(out);
+        UserAction findIdAction = new FindId(out);
         Input input = mock(Input.class);
         findIdAction.execute(input, tracker);
         String ln = System.lineSeparator();
@@ -102,12 +108,12 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteFindNameActionTrue() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         Item item = new Item("Item");
         tracker.add(item);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
-        UserAction findNameAction = new FindNameAction(out);
+        UserAction findNameAction = new FindName(out);
         Input input = mock(Input.class);
         when(input.askStr(any(String.class))).thenReturn("Item");
         findNameAction.execute(input, tracker);
@@ -119,10 +125,10 @@ class MemTrackerMockTest {
 
     @Test
     public void whenMockExecuteFindNameActionFalseThenException() {
-        Output out = new StubOutput();
+        Output out = new Stub();
         Store tracker = new MemTracker();
         tracker.add(new Item("Item"));
-        UserAction findNameAction = new FindNameAction(out);
+        UserAction findNameAction = new FindName(out);
         Input input = mock(Input.class);
         assertThatThrownBy(() -> findNameAction.execute(input, tracker))
                 .isInstanceOf(NullPointerException.class);

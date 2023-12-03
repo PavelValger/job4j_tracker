@@ -1,5 +1,13 @@
 package ru.job4j.tracker;
 
+import ru.job4j.tracker.action.*;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.Validate;
+import ru.job4j.tracker.output.Console;
+import ru.job4j.tracker.output.Output;
+import ru.job4j.tracker.store.MemTracker;
+import ru.job4j.tracker.store.Store;
+
 import java.util.List;
 
 public class StartUI {
@@ -31,19 +39,19 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Output output = new ConsoleOutput();
-        Input input = new ValidateInput(output, new ConsoleInput());
+        Output output = new Console();
+        Input input = new Validate(output, new ru.job4j.tracker.input.Console());
         Store tracker = new MemTracker();
         List<UserAction> actions = List.of(
-                new CreateAction(output),
-                new ShowAction(output),
-                new EditAction(output),
-                new DeleteAction(output),
-                new FindIdAction(output),
-                new FindNameAction(output),
-                new CreateMuchAction(output),
-                new DeleteAllAction(output),
-                new ExitAction(output));
+                new Create(output),
+                new Show(output),
+                new Edit(output),
+                new Delete(output),
+                new FindId(output),
+                new FindName(output),
+                new CreateMuch(output),
+                new DeleteAll(output),
+                new Exit(output));
         new StartUI(output).init(input, tracker, actions);
     }
 }

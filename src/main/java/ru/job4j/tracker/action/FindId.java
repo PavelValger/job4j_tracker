@@ -1,11 +1,16 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
+
+import ru.job4j.tracker.Item;
+import ru.job4j.tracker.output.Output;
+import ru.job4j.tracker.store.Store;
+import ru.job4j.tracker.input.Input;
 
 import java.util.Objects;
 
-public class FindIdAction implements UserAction {
+public class FindId implements UserAction {
     private final Output out;
 
-    public FindIdAction(Output out) {
+    public FindId(Output out) {
         this.out = out;
     }
 
